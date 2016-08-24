@@ -1,15 +1,22 @@
 {
-  "name": "angular2-hashids",
+  "name": "ng2-hashids",
   "version": "0.1.0",
-  "description": "Port of hashids to typescript.",
-  "main": "hashids.ts",
+  "author": "Ivan Akimov <ivan@barreleye.com> (https://twitter.com/IvanAkimov)",
+  "license": "MIT",
+  "description": "Generate YouTube-like ids from numbers. Use Hashids when you do not want to expose your database ids to the user.",
+  "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "karma start"
   },
-  "author": "Andy Mepham",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andymeps/ng2-hashids"
+  },
   "dependencies": {
-    "hashids": "^1.1.0"
+    "@angular/core": "^2.0.0-rc.5",
+    "hashids": "^1.1.0",
+    "rxjs": "^5.0.0-beta.6",
+    "zone.js": "^0.6.17"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -30,5 +37,18 @@
     "ts-loader": "^0.8.2",
     "typescript": "^1.8.10",
     "webpack": "^1.13.2"
-  }
+  },
+  "keywords": [
+    "hashids",
+    "hashid",
+    "hash",
+    "ids",
+    "youtube",
+    "bitly",
+    "obfuscate",
+    "encode",
+    "decode",
+    "encrypt",
+    "decrypt"
+  ]
 }

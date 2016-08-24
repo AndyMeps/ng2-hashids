@@ -1,4 +1,4 @@
-import Hashids from '../src/hashids';
+import { Hashids } from '../';
 import { assert } from 'chai';
 
 describe('custom alphabet', () => {

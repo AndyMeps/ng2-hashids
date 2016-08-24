@@ -1,5 +1,5 @@
 module.exports = {
-    entry: './src/app.ts',
+    entry: './src/index.ts',
     output: {
         filename: 'dist/bundle.js'
     },
@@ -10,7 +10,7 @@ module.exports = {
         loaders: [
             {
                 test: /\.tsx?$/,
-                exclude: /node_modules/,
+                exclude: ['node_modules', 'typings'],
                 loader: 'ts-loader'
             }
         ]

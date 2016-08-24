@@ -1,12 +1,14 @@
+export class Hashids {
 
-export default class Hashids {
+	private seps: string;
+	private minLength: number;
+	private salt: string;
+	private alphabet: string;
+	private guards: string;
 
-	escapeRegExp;
-	seps;
-	minLength;
-	salt;
-	alphabet;
-	guards
+	private _escapeRegExp = (value: string) : string => {
+		return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+	}
 
 	constructor(salt: string = '', minLength: number = 0, alphabet: string = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890') {
 
@@ -20,8 +22,6 @@ export default class Hashids {
 		let uniqueAlphabet: string = '', sepsLength: number, diff: number;
 
 		/* alphabet vars */
-
-		this.escapeRegExp = (s) => s.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
 
 		this.seps = 'cfhistuCFHISTU';
 		this.minLength = parseInt(minLength.toString(), 10) > 0 ? minLength : 0;
@@ -95,9 +95,9 @@ export default class Hashids {
 
 	}
 
-	public encode = (...numbers) => {
+	public encode = (...numbers: any[]) => {
 
-		const ret = '';
+		const ret: string = '';
 
 		if (!numbers.length) {
 			return ret;
@@ -123,7 +123,7 @@ export default class Hashids {
 
 	}
 
-	public decode = (id) => {
+	public decode = (id?: string) => {
 
 		const ret = [];
 
@@ -135,26 +135,29 @@ export default class Hashids {
 
 	}
 
-	public encodeHex = (hex) => {
+	public encodeHex = (hex: any): any => {
 
-		hex = hex.toString();
-		if (!/^[0-9a-fA-F]+$/.test(hex)) {
+		let hexStr = hex.toString();
+
+		if (!/^[0-9a-fA-F]+$/.test(hexStr)) {
 			return '';
 		}
 
-		const numbers = hex.match(/[\w\W]{1,12}/g);
+		const numbers = hexStr.match(/[\w\W]{1,12}/g);
+
+		let newNumbers: number[] = [];
 
 		for (let i = 0; i !== numbers.length; i++) {
-			numbers[i] = parseInt('1' + numbers[i], 16);
+			newNumbers.push(parseInt('1' + numbers[i], 16));
 		}
 
-		return this.encode.apply(this, numbers);
+		return this.encode.apply(this, newNumbers);
 
 	}
 
-	public decodeHex = (id) => {
+	public decodeHex = (id: string): number[] => {
 
-		let ret = [];
+		let ret : number[] = [];
 
 		const numbers = this.decode(id);
 
@@ -166,7 +169,7 @@ export default class Hashids {
 
 	}
 
-	private _encode = (numbers) => {
+	private _encode = (numbers: number[]): string => {
 
 		let ret,
 			alphabet = this.alphabet,
@@ -232,12 +235,13 @@ export default class Hashids {
 
 	}
 
-	private _decode = (id, alphabet) => {
+	private _decode = (id: string, alphabet: string) => {
 
-		let ret = [], i = 0,
-			r = new RegExp(`[${this.escapeRegExp(this.guards)}]`, 'g'),
-			idBreakdown = id.replace(r, ' '),
-			idArray = idBreakdown.split(' ');
+		let ret: number[] = [],
+			i: number = 0,
+			r: RegExp = new RegExp(`[${this._escapeRegExp(this.guards)}]`, 'g'),
+			idBreakdown: string = id.replace(r, ' '),
+			idArray: string[] = idBreakdown.split(' ');
 
 		if (idArray.length === 3 || idArray.length === 2) {
 			i = 1;
@@ -249,7 +253,7 @@ export default class Hashids {
 			const lottery = idBreakdown[0];
 			idBreakdown = idBreakdown.substr(1);
 
-			r = new RegExp(`[${this.escapeRegExp(this.seps)}]`, 'g');
+			r = new RegExp(`[${this._escapeRegExp(this.seps)}]`, 'g');
 			idBreakdown = idBreakdown.replace(r, ' ');
 			idArray = idBreakdown.split(' ');
 
@@ -273,7 +277,7 @@ export default class Hashids {
 
 	}
 
-	private _shuffle = (alphabet, salt) => {
+	private _shuffle = (alphabet: string, salt: string) => {
 
 		let integer;
 
